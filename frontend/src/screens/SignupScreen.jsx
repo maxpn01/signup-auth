@@ -18,7 +18,7 @@ const SignupScreen = () => {
 
     const [signup] = useSignupMutation();
 
-    const submitHandler = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword)
             toast.error("Passwords do not match");
@@ -37,7 +37,7 @@ const SignupScreen = () => {
         <FormContainer>
             <h1>Sign Up</h1>
 
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group className="my-2" controlId="name">
                     <Form.Label>Name</Form.Label>
                     <Form.Control

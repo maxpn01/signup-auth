@@ -13,12 +13,6 @@ import { FaLock, FaLockOpen, FaTrashAlt } from 'react-icons/fa';
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { updateUserStatus, logout } from "../slices/authSlice";
 
-const convertDateString = (s) => {
-    const time = new Date(s).toLocaleTimeString("en-us", { hour: "numeric", minute: "numeric", second: "numeric" });
-    const date = new Date(s).toLocaleDateString("en-us", { day: "numeric", month: "short", year: "numeric" });
-    return time.toString() + ", " + date.toString();
-};
-
 const DashboardScreen = () => {
     const [users, setUsers] = useState([]);
     const [getUsers] = useGetUserProfilesMutation();
@@ -30,7 +24,7 @@ const DashboardScreen = () => {
 
     const { userInfo } = useSelector(state => state.auth);
 
-    const logoutHandler = async () => {
+    const handleLogout = async () => {
         try {
             await logoutApiCall().unwrap();
             dispatch(logout());
@@ -71,7 +65,7 @@ const DashboardScreen = () => {
 
             if (selectedUsers.includes(userInfo.user._id)) {
                 dispatch(updateUserStatus("blocked"));
-                logoutHandler();
+                handleLogout();
             } else {
                 fetchUsers();
                 setSelectedUsers([]);
@@ -100,7 +94,7 @@ const DashboardScreen = () => {
             await deleteUsers({ selectedUsers });
 
             if (selectedUsers.includes(userInfo.user._id)) 
-                logoutHandler();
+                handleLogout();
             else {
                 fetchUsers();
                 setSelectedUsers([]);
@@ -109,6 +103,12 @@ const DashboardScreen = () => {
             toast.error(err?.data?.message || err.error);
         }
     }; 
+
+    const convertDateString = (s) => {
+        const time = new Date(s).toLocaleTimeString("en-us", { hour: "numeric", minute: "numeric", second: "numeric" });
+        const date = new Date(s).toLocaleDateString("en-us", { day: "numeric", month: "short", year: "numeric" });
+        return time.toString() + ", " + date.toString();
+    };
 
     return (
         <Container>

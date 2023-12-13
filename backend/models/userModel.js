@@ -24,8 +24,7 @@ const userSchema = new mongoose.Schema({
         default: Date.now,
     },
     status: { 
-        type: String, 
-        // enum: ["active", "blocked"], 
+        type: String,
         default: "active" 
     },
 });
