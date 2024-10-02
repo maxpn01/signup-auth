@@ -1,1 +1,0 @@
-A signup app with authentication built using MERN stack.
